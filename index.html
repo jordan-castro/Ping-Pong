@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong</title>
+
+    <!-- Including AFrame -->
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <!-- A Frame Extras -->
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <!-- Super Hands -->
+    <script src="https://unpkg.com/super-hands@^3.0.0/dist/super-hands.min.js"></script>
+    <!-- A Frame Physics -->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
+
+    <!-- Controller Interaction with A Frame Physics (A-Frame Physics Extas) -->
+    <script src="https://unpkg.com/aframe-physics-extras@0.1.3/dist/aframe-physics-extras.min.js"></script>
+
+    <!-- Log in VR, but remove when going into Production mode -->
+    <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script>
+
+    <!-- Our JS -->
+    <script src="scripts/index.js" type="module"></script>
+
+    <!-- Include A-Frame Custom Components -->
+    <script src="scripts/custom_components.js" type="module"></script>
+
+</head>
+
+<body>
+    <!-- TODO Fog nigga -->
+    <a-scene physics="debug: true">
+        <a-assets>
+            <a-mixin id="controller" physics-collider static-body="shape: sphere; sphereRadius: 0.05"
+                super-hands="colliderEvent: collisions; colliderEventProperty: els; colliderEndEvent: collisions; colliderEndEventProperty: clearedEls"
+                collision-filter="group: hands; collidesWith: ball, paddle; collisionForces: false">
+            </a-mixin>
+
+            <!-- <a-mixin id="paddle" dynamic-body="shape: square"
+                collision-filter="group: paddle; collidesWith: hands, table, ball; collisionForces: true"></a-mixin> -->
+
+            <a-mixin id="ground" static-body="shape: square"
+                collision-filter="group: ground; collidesWith: ball, paddle; collisionForces: true"></a-mixin>
+        </a-assets>
+        <!-- The VR User -->
+        <a-entity id="rig" movement-controls="enabled: true; speed: 0.01" position="0 0 0">
+            <a-camera id="camera" position="0 1.6 0" look-controls="enabled: true"></a-camera>
+            <a-entity id="left-hand" super-hands hand-controls="hand: left" mixin="controller" x-button-listener>
+            </a-entity>
+            <a-entity id="right-hand" super-hands hand-controls="hand: right" mixin="controller" a-button-listener>
+            </a-entity>
+        </a-entity>
+
+        <!-- The Floor -->
+        <a-plane id="floor" static-body material="color: blue" height="50" width="50" rotation="-90 0 0" mixin="ground">
+        </a-plane>
+
+        <!-- Let's build a Ping Pong Table -->
+        <a-box id="table" static-body material="color: green" height="0.03" width="2.5" rotation="0 90 0"
+            position="0 1 -1.3" collision-filter="group: table; collidesWith: ball, paddle; collisionForces: true">
+        </a-box>
+
+        <!-- The Ping Pong Ball -->
+        <a-sphere id="ball" dynamic-body="shape: sphere; mass: 0.0005" grabbable position="0 2 -0.5"
+            scale="0.02 0.02 0.02" collision-filter="group: ball; collidesWith: default, hands, table, ground, paddle">
+        </a-sphere>
+
+        <!-- The Ping Pong Paddle -->
+        <a-box id="paddle" dynamic-body="shape: square" height="0.01" grabbable paddle-comp width="0.2" position="0 2 -0.5"
+            material="color: black" scale="1 1 0.1" collision-filter="group: paddle; collidesWith: default, hands, table, ball, ground; collisionForces: true"></a-box>
+
+        <!-- The vr Logger -->
+        <!-- TODO Remove?? -->
+        <a-entity log geometry="primitive: plane" material="color: #111" text="color: lightgreen" position="-1.5 2 0"
+            rotation="0 90 0"></a-entity>
+
+        <!-- Some sky -->
+        <a-sky color="skyblue"></a-sky>
+    </a-scene>
+</body>
+
+</html>
