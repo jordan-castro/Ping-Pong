@@ -27,11 +27,7 @@ class Paddle extends UTILS.PositionHelper {
      */
     toggle() {
         console.log("Here buddy")
-        if (this.isCurrentlyDynamic === true) {
-            this.disable();
-        } else {
-            this.enable();
-        }
+        this.isCurrentlyDynamic = !this.isCurrentlyDynamic;
     }
 }
 
