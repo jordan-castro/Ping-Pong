@@ -19,11 +19,10 @@ AFRAME.registerComponent('paddle-comp', {
     },
     tick: function () {
         // Check if paddle is active
-        if (paddle.isActive) {
+        if (paddle.isCurrentlyDynamic) {
             // It should stay stuck the control of the paddle
-            paddle.toController();
-        } else {
-            paddle.disable();
+            // paddle.toController();
+            // TODO: Figure out how to make the paddle move with the controller
         }
     }
 });
