@@ -21,6 +21,11 @@ If you are viewing the app in a VR headset, then you can go to
 https://your-computer-ip-address:custom-port-number
 ```
 
+Without running locally, you can visit:
+```
+https://james-garfield.github.io/Ping-Pong/
+```
+
 
 ## Controls
 The application does interact with the Oculus Quest controllers. At this point in time, the only gamepad that is supported is the Oculus Quest.
