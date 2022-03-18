@@ -22,9 +22,7 @@ https://your-computer-ip-address:custom-port-number
 ```
 
 Without running locally, you can visit:
-```
 https://james-garfield.github.io/Ping-Pong/
-```
 
 
 ## Controls
